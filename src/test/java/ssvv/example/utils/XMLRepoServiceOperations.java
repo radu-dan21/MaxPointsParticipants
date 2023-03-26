@@ -11,6 +11,7 @@ import ssvv.example.validation.TemaValidator;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XMLRepoServiceOperations {
@@ -23,9 +24,11 @@ public class XMLRepoServiceOperations {
     private static final Service service = initService();
 
     private static void createTestRepoFiles() {
-        files = List.of(
-                new File(studentsRepoFilePath), new File(assignmentsRepoFilePath), new File(gradesRepoFilePath)
-        );
+        files = new ArrayList<File>();
+        files.add(new File(studentsRepoFilePath));
+        files.add(new File(assignmentsRepoFilePath));
+        files.add(new File(gradesRepoFilePath));
+
         boolean allFilesCreated = true;
 
         for (File f: files) {
