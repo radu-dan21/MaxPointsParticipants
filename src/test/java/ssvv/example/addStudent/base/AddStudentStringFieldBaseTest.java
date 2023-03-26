@@ -2,7 +2,6 @@ package ssvv.example.addStudent.base;
 
 import org.junit.Ignore;
 import org.junit.runners.Parameterized;
-import ssvv.example.addStudent.base.AddStudentBaseTest;
 
 import java.util.Arrays;
 import java.util.Collection;
