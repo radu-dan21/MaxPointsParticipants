@@ -21,10 +21,41 @@ public class XMLRepoServiceOperations {
 
     private static List<File> files;
 
-    private static final Service service = initService();
+    private static StudentXMLRepo studentRepo;
+    private static TemaXMLRepo assignmentRepo;
+    private static NotaXMLRepo gradesRepo;
+
+    private static Service service;
+
+    public static Service getService() {
+        initIfNull(service);
+        return service;
+    }
+
+    public static StudentXMLRepo getStudentRepo() {
+        initIfNull(studentRepo);
+        return studentRepo;
+    }
+
+    public static TemaXMLRepo getAssignmentRepo() {
+        initIfNull(assignmentRepo);
+        return assignmentRepo;
+    }
+
+    public static NotaXMLRepo getGradesRepo() {
+        initIfNull(gradesRepo);
+        return gradesRepo;
+    }
+
+    private static void initIfNull(Object o) {
+        if (o == null) {
+            createTestRepoFiles();
+            reInitObjects();
+        }
+    }
 
     private static void createTestRepoFiles() {
-        files = new ArrayList<File>();
+        files = new ArrayList<>();
         files.add(new File(studentsRepoFilePath));
         files.add(new File(assignmentsRepoFilePath));
         files.add(new File(gradesRepoFilePath));
@@ -45,27 +76,13 @@ public class XMLRepoServiceOperations {
         }
     }
 
-    private static Service initService() {
-        createTestRepoFiles();
-        reInitRepos();
-
-        StudentValidator studentValidator = new StudentValidator();
-        StudentXMLRepo studentXMLRepository = new StudentXMLRepo(studentsRepoFilePath);
-
-        TemaValidator temaValidator = new TemaValidator();
-        TemaXMLRepo temaXMLRepository = new TemaXMLRepo(assignmentsRepoFilePath);
-
-        NotaValidator notaValidator = new NotaValidator(studentXMLRepository, temaXMLRepository);
-        NotaXMLRepo notaXMLRepository = new NotaXMLRepo(gradesRepoFilePath);
-
-        return new Service(studentXMLRepository, studentValidator, temaXMLRepository, temaValidator, notaXMLRepository, notaValidator);
+    public static void reInitObjects() {
+        deleteRepoFilesContent();
+        initRepos();
+        initService();
     }
 
-    public static Service getService() {
-        return service;
-    }
-
-    public static void reInitRepos() {
+    private static void deleteRepoFilesContent() {
         PrintWriter writer;
         for (File f: files) {
             try {
@@ -76,5 +93,18 @@ public class XMLRepoServiceOperations {
             writer.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox/>");
             writer.close();
         }
+    }
+
+    private static void initRepos() {
+        studentRepo = new StudentXMLRepo(studentsRepoFilePath);
+        assignmentRepo = new TemaXMLRepo(assignmentsRepoFilePath);
+        gradesRepo = new NotaXMLRepo(gradesRepoFilePath);
+    }
+
+    private static void initService() {
+        StudentValidator studentValidator = new StudentValidator();
+        TemaValidator temaValidator = new TemaValidator();
+        NotaValidator notaValidator = new NotaValidator(studentRepo, assignmentRepo);
+        service = new Service(studentRepo, studentValidator, assignmentRepo, temaValidator, gradesRepo, notaValidator);
     }
 }

@@ -1,9 +1,6 @@
 package ssvv.example.addStudent.base;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import ssvv.example.domain.Student;
@@ -19,15 +16,16 @@ import java.util.Collections;
 public abstract class AddStudentBaseTest {
     protected final boolean isValid;
 
-    protected static final Service service = XMLRepoServiceOperations.getService();
+    protected Service service = XMLRepoServiceOperations.getService();
 
     public AddStudentBaseTest(boolean isValid) {
         this.isValid = isValid;
     }
 
-    @BeforeClass
-    public static void setup() {
-        XMLRepoServiceOperations.reInitRepos();
+    @Before
+    public void setup() {
+        XMLRepoServiceOperations.reInitObjects();
+        service = XMLRepoServiceOperations.getService();
     }
 
     // Re-define this in base classes for parametrization
