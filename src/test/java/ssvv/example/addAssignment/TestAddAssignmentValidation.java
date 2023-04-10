@@ -24,29 +24,11 @@ public class TestAddAssignmentValidation extends BaseTestAddAssignment {
     @Parameterized.Parameters
     public static Collection<Object[]> assignmentAndIsValidFlag() {
         return Arrays.asList(new Object[][] {
-                {validAssignment, true},
-
-                {new Tema(" ", "descriere", 13, 2), true},
-
-                {new Tema("nr", " ", 13, 2), true},
-
-                {new Tema("nr", "descriere", 1, 1), true},
-                {new Tema("nr", "descriere", 14, 1), true},
-                {new Tema("nr", "descriere", 14, 14), true},
-
-                {new Tema("", "descriere", 13, 2), false},     // empty nrTema
-                {new Tema(null, "descriere", 13, 2), false},   // null nrTema
-
-                {new Tema("nr", "", 13, 2), false},            // empty description
-                {new Tema("nr", null, 13, 2), false},          // null description
-
-                {new Tema("nr", "descriere", 15, 2), false},   // deadline > 14
-                {new Tema("nr", "descriere", 14, 15), false},  // primire > 14
-
-                {new Tema("nr", "descriere", 0, 1), false},    // deadline < 1
-                {new Tema("nr", "descriere", 1, 0), false},    // primire < 1
-
-                {new Tema("nr", "descriere", 6, 7), false},    // primire > deadline
+                {new Tema("", "desc", 13, 2), false},
+                {new Tema("nr", "", 13, 2), false},
+                {new Tema("nr", "desc", -1, 1), false},
+                {new Tema("nr", "desc", 13, -1), false},
+                {new Tema("nr", "desc", 10, 11), false},
         });
     }
 

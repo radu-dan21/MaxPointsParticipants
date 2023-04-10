@@ -13,7 +13,7 @@ import java.util.Collection;
 public class BaseTestAddAssignment {
     protected Service service = XMLRepoServiceOperations.getService();
 
-    protected static final Tema validAssignment = new Tema("nrTema", "descriereTema", 10, 1);
+    protected static final Tema validAssignment = new Tema("nr", "desc", 10, 1);
 
     @Before
     public void setup() {
