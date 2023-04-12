@@ -76,6 +76,18 @@ public class XMLRepoServiceOperations {
         }
     }
 
+    public static boolean createTestFile(String testFileName) {
+        File file = new File(testFileName);
+        boolean isFileCreated;
+        try {
+            isFileCreated = file.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        file.deleteOnExit();
+        return isFileCreated;
+    }
+
     public static void reInitObjects() {
         deleteRepoFilesContent();
         initRepos();
