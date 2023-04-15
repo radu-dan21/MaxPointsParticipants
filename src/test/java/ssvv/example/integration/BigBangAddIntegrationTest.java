@@ -7,7 +7,7 @@ import ssvv.example.service.Service;
 import ssvv.example.utils.XMLRepoServiceOperations;
 import ssvv.example.validation.ValidationException;
 
-public class AddIntegrationTest extends BaseIntegrationTest {
+public class BigBangAddIntegrationTest extends BaseIntegrationTest {
     protected Service service = XMLRepoServiceOperations.getService();
 
     @Before
